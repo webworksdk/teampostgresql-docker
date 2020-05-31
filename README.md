@@ -1,12 +1,9 @@
 # TeamPostgreSQL Container
 
 - Based on [alpinelinux with Oracle JRE](http://hub.docker.com/r/anapsix/alpine-java)
-- Based on scripts from [steigr/docker-teampostgresql](https://github.com/steigr/docker-teampostgresql)
+- Used scripts from [steigr/docker-teampostgresql](https://github.com/steigr/docker-teampostgresql)
 
 ## Configuration
-
-### Caddy
-* `$CADDY_PORT` or `$PORT` (default: `80`)
 
 ### TeamPostgreSQL
 * `$TEAMPOSTGRESQL_PORT` (default: `8082`)
