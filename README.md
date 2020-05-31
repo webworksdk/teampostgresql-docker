@@ -26,11 +26,8 @@
 
 ```shell
 # launch teampostgresql web application
-docker run --rm --link=postgres \
-           --publish=8432:80 \
-           --name=teampostgresql \
+docker run --name=teampostgresql \
            --env=TEAMPOSTGRESQL_ADMIN_USER=postgres \
            --env=TEAMPOSTGRESQL_ADMIN_PASSWORD=supersecure \
-           --env=TEAMPOSTGRESQL_DEFAULT_HOST=postgres \
            webworks/teampostgresql
 ```
