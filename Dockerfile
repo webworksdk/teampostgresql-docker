@@ -12,4 +12,5 @@ RUN  apk add --no-cache --virtual .build-deps unzip curl \
  &&  apk del .build-deps \
  &&  rm -rf teampostgresql teampostgresql.zip /var/cache/apk/*
 
-CMD ["echo", "hello"]
+ENTRYPOINT ["teampostgresql"]
+ADD docker-entrypoint.sh /bin/teampostgresql

@@ -103,3 +103,4 @@ with_reaper() {
 #vars
 #main "$@"
 #main
+echo 'hello from dockerscript'
