@@ -2,6 +2,7 @@
 
 - Based on [alpinelinux with Oracle JRE](http://hub.docker.com/r/anapsix/alpine-java)
 - Used scripts from [steigr/docker-teampostgresql](https://github.com/steigr/docker-teampostgresql)
+	- Removed [Caddy](https://github.com/caddyserver/caddy) proxy (v0.95) as it [breaks file uploads](https://github.com/caddyserver/caddy/issues/1480)
 
 ## Configuration
 
@@ -24,11 +25,6 @@
 ## Example
 
 ```shell
-# launch postgres server
-docker run --detach=true \
-           --env=POSTGRESQL_PASSWORD=supersecure \
-           --name=postgres \
-           postgres
 # launch teampostgresql web application
 docker run --rm --link=postgres \
            --publish=8432:80 \
