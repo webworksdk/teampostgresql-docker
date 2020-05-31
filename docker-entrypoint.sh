@@ -92,7 +92,7 @@ with_reaper() {
 		printenv | sed -e 's/^/export /' -e 's/=/="/' -e 's/$/"/' > /.env
 		exec env - sh -c "exec $(command -v tini) $0 $@"
 	fi
-}
+} 
 
 with_reaper "$@"
 vars

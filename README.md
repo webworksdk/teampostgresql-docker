@@ -2,7 +2,7 @@
 
 - Based on [alpinelinux with Oracle JRE](http://hub.docker.com/r/anapsix/alpine-java)
 - Used scripts from [steigr/docker-teampostgresql](https://github.com/steigr/docker-teampostgresql)
-	- Removed [Caddy](https://github.com/caddyserver/caddy) proxy (v0.95) as it [breaks file uploads](https://github.com/caddyserver/caddy/issues/1480)
+	- Removed [Caddy](https://github.com/caddyserver/caddy) proxy (v0.95) as it [breaks file uploads](https://github.com/caddyserver/caddy/issues/1480) 
 
 ## Configuration
 

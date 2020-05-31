@@ -12,7 +12,7 @@ RUN  apk add --no-cache --virtual .build-deps curl \
 RUN  apk add --no-cache --virtual .runtime-deps su-exec \
  &&  rm -rf /var/cache/apk/*
 
-RUN  apk add --no-cache --virtual .build-deps unzip curl libcap \
+RUN  apk add --no-cache --virtual .build-deps unzip curl libcap \ 
  &&  curl -Lo teampostgresql.zip http://cdn.webworks.dk/download/teampostgresql_multiplatform.zip \
  &&  unzip -o teampostgresql.zip \
  &&  mv teampostgresql/webapp /app \
