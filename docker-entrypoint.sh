@@ -99,6 +99,7 @@ with_reaper() {
 	fi
 }
 
-with_reaper "$@"
+#with_reaper "$@"
 vars
-main "$@"
+#main "$@"
+main
