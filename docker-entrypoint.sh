@@ -4,6 +4,8 @@ set -eo pipefail
 # [[ -z "$TRACE" ]] || set -x
 
 vars() {
+	export CADDY_PORT=${CADDY_PORT:-$PORT}
+	export CADDY_PORT=${CADDY_PORT:-80}
 	export TEAMPOSTGRESQL_PORT=${TEAMPOSTGRESQL_PORT:-8082}
 	export TEAMPOSTGRESQL_ADMIN_USER=${TEAMPOSTGRESQL_ADMIN_USER:-}
 	export TEAMPOSTGRESQL_ADMIN_PASSWORD=${TEAMPOSTGRESQL_ADMIN_PASSWORD:-$TEAMPOSTGRESQL_ADMIN_USER}
@@ -36,13 +38,14 @@ vars() {
 }
 
 main() {
-#	command -v "$1" >/dev/null 2>&1 && exec "$@"
+	command -v "$1" >/dev/null 2>&1 && exec "$@"
 	cd /app
 	update_teampostgresql_config | tee "$PWD/WEB-INF/teampostgresql-config.xml" | debug_logger
-#	env - $(command -v su-exec) teampostgresql $(command -v caddy) -log=stdout -conf="$PWD/Caddyfile" -root=/var/tmp "$@" <>/dev/null 2>&1 &
-#	set -- env - $(command -v su-exec) teampostgresql $(command -v java) -cp /app/WEB-INF/lib/log4j-1.2.17.jar-1.0.jar:/app/WEB-INF/classes:/app/WEB-INF/lib/* dbexplorer.TeamPostgreSQL $TEAMPOSTGRESQL_PORT . /
+	update_caddy_config          | tee "$PWD/Caddyfile" | debug_logger
+	env - $(command -v su-exec) teampostgresql $(command -v caddy) -log=stdout -conf="$PWD/Caddyfile" -root=/var/tmp "$@" <>/dev/null 2>&1 &
+	set -- env - $(command -v su-exec) teampostgresql $(command -v java) -cp /app/WEB-INF/lib/log4j-1.2.17.jar-1.0.jar:/app/WEB-INF/classes:/app/WEB-INF/lib/* dbexplorer.TeamPostgreSQL $TEAMPOSTGRESQL_PORT . /
 	environment_hygiene
-#	exec "$@"
+	exec "$@"
 }
 
 debug_logger() {
@@ -56,6 +59,14 @@ environment_hygiene() {
 	export TZ=:/etc/localtime
 	# set language and sorting
 	export LANG=${LANG:-C.UTF-8} LC_ALL=${LC_ALL:-C.UTF-8}
+}
+update_caddy_config() {
+	cat<<update_caddy_config
+0.0.0.0:${CADDY_PORT}
+proxy / 127.0.0.1:${TEAMPOSTGRESQL_PORT} {
+	transparent
+}
+update_caddy_config
 }
 
 update_teampostgresql_config() {
