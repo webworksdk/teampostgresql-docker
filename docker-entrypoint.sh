@@ -39,7 +39,7 @@ main() {
 	command -v "$1" >/dev/null 2>&1 && exec "$@"
 	cd /app
 	update_teampostgresql_config | tee "$PWD/WEB-INF/teampostgresql-config.xml" | debug_logger
-	env - $(command -v su-exec) teampostgresql -log=stdout -root=/var/tmp "$@" <>/dev/null 2>&1 &
+	env - $(command -v su-exec) teampostgresql $(command -v caddy) -log=stdout -conf="$PWD/Caddyfile" -root=/var/tmp "$@" <>/dev/null 2>&1 &
 	set -- env - $(command -v su-exec) teampostgresql $(command -v java) -cp /app/WEB-INF/lib/log4j-1.2.17.jar-1.0.jar:/app/WEB-INF/classes:/app/WEB-INF/lib/* dbexplorer.TeamPostgreSQL $TEAMPOSTGRESQL_PORT . /
 	environment_hygiene
 	exec "$@"
