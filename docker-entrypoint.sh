@@ -45,7 +45,7 @@ debug_logger() {
 }
 
 environment_hygiene() {
-	# clear unneeded environment variables
+	# clear unneeded environment variables 
 	for var in $(printenv | cut -f1 -d= | grep -v -e '^HOME$' -e '^USER$' -e '^PATH$'); do unset $var; done
 	# see https://blog.packagecloud.io/eng/2017/02/21/set-environment-variable-save-thousands-of-system-calls/
 	export TZ=:/etc/localtime
